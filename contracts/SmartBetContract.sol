@@ -57,7 +57,13 @@ contract SmartBetContract {
 
         // adding player who won the bet of a Match
         if (scoreA == match_to_bet.teamA && scoreB == match_to_bet.teamB) {
-            Player memory winner = players[msg.sender];
+            Player memory winner;
+            for (uint256 i = 0; i < players.length; ++i){
+                if (players[i].player_address == msg.sender){
+                    winner = players[i];
+                    break;
+                }
+            }
             emit WinTheBet(winner, matchId);
             if (isWinner(winner, matchId)) {
                 return;
